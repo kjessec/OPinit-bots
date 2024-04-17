@@ -1,5 +1,6 @@
 import { Monitor } from './monitor'
-import { Coin, Msg, MsgFinalizeTokenDeposit } from '@initia/initia.js'
+import { Coin, Msg } from '@initia/initia.js'
+import { MsgFinalizeTokenDeposit } from '@initia/initia.jsv41'
 import {
   ExecutorDepositTxEntity,
   ExecutorUnconfirmedTxEntity,
@@ -10,7 +11,7 @@ import { RPCClient, RPCSocket } from '../rpc'
 import { getDB } from '../../worker/bridgeExecutor/db'
 import winston from 'winston'
 import { config } from '../../config'
-import { TxWallet, WalletType, getWallet, initWallet } from '../wallet'
+import { TxWallet, WalletType, getWallet, initWallet } from '../walletv41'
 
 export class L1Monitor extends Monitor {
   executor: TxWallet
@@ -22,7 +23,7 @@ export class L1Monitor extends Monitor {
   ) {
     super(socket, rpcClient, logger);
     [this.db] = getDB()
-    initWallet(WalletType.Executor, config.l2lcd)
+    initWallet(WalletType.Executor, config.l2lcdv41)
     this.executor = getWallet(WalletType.Executor)
   }
 

@@ -1,4 +1,6 @@
 import { LCDClient } from '@initia/initia.js'
+import { LCDClient as LCDClientv41 } from '@initia/initia.jsv41'
+
 import { validateCelestiaConfig } from './celestia/utils'
 import * as dotenv from 'dotenv'
 
@@ -116,6 +118,14 @@ export const config = {
     }
   ),
   l2lcd: new LCDClient(
+    L2_LCD_URI ? L2_LCD_URI.split(',')[0] : 'http://localhost:1317',
+    {
+      gasPrices: L2_GAS_PRICES || '0.15umin',
+      gasAdjustment: '2',
+      chainId: L2_CHAIN_ID
+    }
+  ),
+  l2lcdv41: new LCDClientv41(
     L2_LCD_URI ? L2_LCD_URI.split(',')[0] : 'http://localhost:1317',
     {
       gasPrices: L2_GAS_PRICES || '0.15umin',

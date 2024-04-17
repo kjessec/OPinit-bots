@@ -1,4 +1,4 @@
-import { BlockInfo, Event, LCDClient, TxInfo } from '@initia/initia.js'
+import { BlockInfo, Event, LCDClient, TxInfo } from '@initia/initia.jsv41'
 import { getLatestOutputFromExecutor, getOutputFromExecutor } from '../query'
 import { WithdrawStorage } from '../storage'
 import { WithdrawalTx } from '../types'

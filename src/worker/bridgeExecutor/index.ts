@@ -19,11 +19,11 @@ async function runBot(): Promise<void> {
       new RPCClient(config.L1_RPC_URI, logger),
       logger
     ),
-    new L2Monitor(
-      new RPCSocket(config.L2_RPC_URI, 10000, logger),
-      new RPCClient(config.L2_RPC_URI, logger),
-      logger
-    ),
+    // new L2Monitor(
+    //   new RPCSocket(config.L2_RPC_URI, 10000, logger),
+    //   new RPCClient(config.L2_RPC_URI, logger),
+    //   logger
+    // ),
     new Resurrector(logger)
   ]
   try {
