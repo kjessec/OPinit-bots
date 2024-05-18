@@ -5,7 +5,6 @@ import { WithdrawalTx } from '../types'
 import { sha3_256 } from '../util'
 import OutputEntity from '../../orm/executor/OutputEntity'
 import { EntityManager, EntityTarget, ObjectLiteral } from 'typeorm'
-import { RPCClient } from '../../lib/rpc'
 
 class MonitorHelper {
   ///
@@ -102,21 +101,19 @@ class MonitorHelper {
   }
 
   public async fetchAllEvents(
-    rpcClient: RPCClient,
+    lcd: any,
     height: number
   ): Promise<[boolean, any[]]> {
-    const blockResults = await rpcClient.getBlockResults(height)
-    if (!blockResults) {
-      return [true, []]
-    }
+    const searchRes = await this.search(lcd, {
+      query: [{ key: 'tx.height', value: height.toString() }]
+    })
 
-    const txResults = blockResults.result.txs_results
     const extractAllEvents = (txs: any[]) =>
       txs
         .filter((tx) => tx.events && tx.events.length > 0)
         .flatMap((tx) => tx.events ?? [])
-    const isEmpty = txResults.length === 0
-    const events = extractAllEvents(txResults)
+    const isEmpty = searchRes.txs.length === 0
+    const events = extractAllEvents(searchRes.tx_responses)
 
     return [isEmpty, events]
   }
